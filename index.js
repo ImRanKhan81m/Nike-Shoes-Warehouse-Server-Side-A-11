@@ -31,7 +31,14 @@ async function run(){
             res.send(result)
         })
 
-        // Create inventories product
+        app.get('/shoes/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const service = await productCollection.findOne(query);
+            res.send(service);
+        });
+
+        // Create inventories product 
         // localhost:5000/shoe
 
         app.post('/shoe', async (req, res) => {
