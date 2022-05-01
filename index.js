@@ -41,7 +41,7 @@ async function run(){
         // Create inventories product 
         // localhost:5000/shoe
 
-        app.post('/shoe', async (req, res) => {
+        app.post('/shoes', async (req, res) => {
             const data = req.body;
             // console.log(data);
             const result = await productCollection.insertOne(data);
@@ -58,8 +58,7 @@ async function run(){
             const options = { upsert :true};
             const updateDoc = {
                 $set:{
-                    quantity: data.quantity,
-                    imgURL: data.imgURL
+                    quantity: data.quantity
                 }
             };
             const result = await productCollection.updateOne(filter, updateDoc, options);
@@ -68,7 +67,7 @@ async function run(){
 
         // Delete inventories product
 
-        app.delete('/shoe/:id', async(req, res)=>{
+        app.delete('/shoes/:id', async(req, res)=>{
             const id = req.params.id;
             const filter = { _id: ObjectId(id) };
             const result = await productCollection.deleteOne(filter);
