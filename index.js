@@ -23,7 +23,7 @@ async function run(){
         // get api to read all inventories product
 
         app.get("/shoes", async (req, res)=>{
-            const query = req.query;
+            const query = {};
             console.log(query);
             const cursor = productCollection.find(query);
             const result = await cursor.toArray();
@@ -45,22 +45,31 @@ async function run(){
 
         app.put('/shoe/:id', async(req, res)=>{
             const id = req.params.id;
+            console.log(id);
             const data = req.body;
             const filter = {_id: ObjectId(id)};
-            const option = {upsert:true};
+            const options = { upsert :true};
             const updateDoc = {
                 $set:{
                     quantity: data.quantity
                 }
             };
             const result = await productCollection.updateOne(filter, updateDoc, options);
-
             res.send(result)
+        })
+
+        // Delete inventories product
+
+        app.delete('/shoe/:id', async(req, res)=>{
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const result = await productCollection.deleteOne(filter);
+            res.send(result);
         })
 
 
 
-        // Delete inventories product
+
         console.log('connected to db');
     }
     finally{
