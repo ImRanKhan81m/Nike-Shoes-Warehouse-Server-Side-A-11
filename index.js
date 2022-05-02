@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const cors = require('cors');
 app.use(cors());
+const jwt = require('jsonwebtoken');
 app.use(express.json());
 require('dotenv').config();
 
@@ -20,8 +21,17 @@ async function run(){
         await client.connect();
         const productCollection = client.db("shoesWarehouse").collection("shoes");
 
-        // get api to read all inventories product
 
+        app.post('/login', async(req, res)=>{
+            const user = req.body;
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{
+                expiresIn: '20d'
+            });
+            res.send({accessToken});
+        })
+
+
+        // get api to read all inventories product
         app.get("/shoes", async (req, res)=>{
             // const email = req.query.email;
             // console.log(email);
