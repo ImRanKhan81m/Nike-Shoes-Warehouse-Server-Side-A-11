@@ -23,8 +23,19 @@ async function run(){
         // get api to read all inventories product
 
         app.get("/shoes", async (req, res)=>{
+            // const email = req.query.email;
+            // console.log(email);
             const query = {};
-            console.log(query);
+            const cursor = productCollection.find(query);
+            const result = await cursor.toArray();
+
+            res.send(result)
+        })
+
+        app.get("/shoe", async (req, res)=>{
+            const email = req.query.email;
+            console.log(email);
+            const query = {email};
             const cursor = productCollection.find(query);
             const result = await cursor.toArray();
 
@@ -50,7 +61,7 @@ async function run(){
 
         // Update inventories product
 
-        app.put('/shoe/:id', async(req, res)=>{
+        app.put('/shoes/:id', async(req, res)=>{
             const id = req.params.id;
             console.log(id);
             const data = req.body;
