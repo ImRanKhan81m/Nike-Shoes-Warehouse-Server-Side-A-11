@@ -43,6 +43,8 @@ async function run(){
         })
 
         app.get("/shoe", async (req, res)=>{
+            const authHeader = req.headers.authorization;
+            console.log(authHeader);
             const email = req.query.email;
             console.log(email);
             const query = {email};
